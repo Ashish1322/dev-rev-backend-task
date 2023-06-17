@@ -1,0 +1,87 @@
+import React from "react";
+import { useContext } from "react";
+import MainContext from "../../MainContext";
+
+export default function AdminFlightCard({ openModal, flight }) {
+  const { deleteFlight, getFlightDetails } = useContext(MainContext);
+
+  return (
+    <div
+      className="row  flight-card my-3"
+      style={{ width: "70%", margin: "auto" }}
+    >
+      <div className="col col-2 flight-card-flex ">
+        <div>
+          <p className="text-muted flght-card-p">{flight && flight.name}</p>
+          <p className="text-muted flight-card-p">
+            {flight && flight.flightnumber}
+          </p>
+        </div>
+      </div>
+      <div className="col col-3  flight-card-flex">
+        <div>
+          <p className=" flght-card-p">
+            {" "}
+            <i class="fas fa-map-marker-alt"></i> {flight && flight.source}
+          </p>
+          <p className="text-muted flight-card-p">
+            <i class="fas fa-clock"></i> {flight && flight.departuretime}
+          </p>
+        </div>
+      </div>
+      <div className="col col-2 flight-card-flex">
+        <div>
+          <p className=" flght-card-p text-center">
+            <i class="fas fa-plane-departure"> </i>
+          </p>
+          <p className="text-muted flght-card-p">
+            Seats: {flight && flight.seats}
+          </p>
+        </div>
+      </div>
+      <div className="col col-2 flight-card-flex">
+        <div>
+          <p className=" flght-card-p">
+            {" "}
+            <i class="fas fa-map-marker-alt"></i> {flight && flight.destination}
+          </p>
+          <p className="text-muted flight-card-p">
+            <i class="fas fa-clock"></i> {flight && flight.arrivaltime}
+          </p>
+        </div>
+      </div>
+      <div className="col col-3 flight-card-flex">
+        <div>
+          <p className="text-muted flght-card-p">
+            {" "}
+            &#8377; {flight && flight.amount}
+            <span style={{ float: "right" }}>{flight && flight.date}</span>
+          </p>
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => {
+              getFlightDetails(flight._id);
+              openModal();
+            }}
+          >
+            {" "}
+            Bookings
+          </button>
+
+          <button
+            onClick={() => {
+              let action = window.confirm("Really want to delete Flight !");
+              if (action) {
+                deleteFlight(flight._id);
+              }
+            }}
+            className="btn btn-danger btn-sm mx-2"
+          >
+            {" "}
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
